@@ -19,7 +19,7 @@ function findExam(userText) {
   const text = userText.toLowerCase().replace(/\s/g, "");
 
   return data.find((row) => {
-    const name = String(row["검사, 시술, 수술명"] || "").toLowerCase().replace(/\s/g, "");
+    const name = String(row["검사명"] || "").toLowerCase().replace(/\s/g, "");
     const aliases = String(row["별칭"] || "").toLowerCase().replace(/\s/g, "");
 
     return text.includes(name) || aliases.split(",").some(alias => {
@@ -34,7 +34,7 @@ function makeAnswer(row) {
   }
 
   return [
-    `📌 ${row["검사, 시술, 수술명"]}`,
+    `📌 ${row["검사명"]}`,
     row["금식"] ? `\n🍽 금식: ${row["금식"]}` : "",
     row["IV준비"] ? `\n💉 IV준비: ${row["IV준비"]}` : "",
     row["준비사항"] ? `\n📝 준비사항:\n${row["준비사항"]}` : "",
