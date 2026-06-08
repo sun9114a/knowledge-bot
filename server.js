@@ -28,9 +28,19 @@ function detectIntent(userText) {
     return "금식";
   }
 
-  if (text.includes("iv") || text.includes("라인") || text.includes("주사")) {
-    return "IV준비";
-  }
+if (
+  text.includes("iv") ||
+  text.includes("아이브이") ||
+  text.includes("라인") ||
+  text.includes("주사") ||
+  text.includes("혈관") ||
+  text.includes("정맥") ||
+  text.includes("루트") ||
+  text.includes("route") ||
+  text.includes("확보")
+) {
+  return "IV준비";
+}
 
   if (text.includes("준비") || text.includes("준비물") || text.includes("전처치")) {
     return "준비사항";
