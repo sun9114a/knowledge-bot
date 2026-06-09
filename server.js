@@ -13,12 +13,19 @@ function normalize(text) {
     .replace(/\s/g, "")
     .replace(/[?？!！.,~]/g, "");
 }
-
+let cachedData = [];
 function loadData() {
+  if (cachedData.length > 0) {
+    return cachedData;
+  }
+
   const workbook = xlsx.readFile(EXCEL_PATH);
   const sheetName = workbook.SheetNames[0];
   const sheet = workbook.Sheets[sheetName];
-  return xlsx.utils.sheet_to_json(sheet);
+
+  cachedData = xlsx.utils.sheet_to_json(sheet);
+
+  return cachedData;
 }
 
 function detectIntent(userText) {
@@ -57,7 +64,15 @@ function detectIntent(userText) {
   if (text.includes("전화") || text.includes("내선") || text.includes("번호")) {
     return "내선번호";
   }
-
+if (
+  text.includes("알려줘") ||
+  text.includes("정보") ||
+  text.includes("설명") ||
+  text.includes("뭐야") ||
+  text.includes("대해")
+) {
+  return "전체";
+}
   return "전체";
 }
 
@@ -100,7 +115,8 @@ function removeIntentWords(text) {
     .replace(/준비사항|준비물|준비|전처치/g, "")
     .replace(/주의사항|주의|조심|후간호|검사후|시술후|간호/g, "")
     .replace(/어디서|어디|위치|장소|몇층|해|하나요|하니|해야돼|해야되|돼|되/g, "")
-    .replace(/전화|내선|번호/g, "");
+    .replace(/전화|내선|번호/g, "")
+.replace(/알려줘|정보|설명|뭐야|에대해|대해/g, "");
 }
 
 function findExam(userText) {
