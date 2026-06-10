@@ -186,18 +186,47 @@ function makeAnswer(row, intent) {
       return `📌 ${examName}\n\n${intent} 정보가 등록되어 있지 않습니다.`;
     }
 
-    return `📌 ${examName}\n${intent}: ${result}`;
+let answer = `📌 ${examName}\n${intent}: ${result}`;
+
+if (value(row, "참고URL")) {
+  answer += `\n\n🔗 참고자료\n${value(row, "참고URL")}`;
+}
+
+return answer;
   }
 
-  return [
-    `📌 ${examName}`,
-    value(row, "금식") ? `\n🍽 금식: ${value(row, "금식")}` : "",
-    value(row, "IV준비") ? `\n💉 IV준비: ${value(row, "IV준비")}` : "",
-    value(row, "준비사항") ? `\n📝 준비사항:\n${value(row, "준비사항")}` : "",
-    value(row, "주의사항") ? `\n⚠️ 주의사항:\n${value(row, "주의사항")}` : "",
-    value(row, "위치") ? `\n📍 위치: ${value(row, "위치")}` : "",
-    value(row, "내선번호") ? `\n☎️ 내선번호: ${value(row, "내선번호")}` : "",
-  ].join("");
+return [
+  `📌 ${examName}`,
+
+  value(row, "금식")
+    ? `\n🍽 금식: ${value(row, "금식")}`
+    : "",
+
+  value(row, "IV준비")
+    ? `\n💉 IV준비: ${value(row, "IV준비")}`
+    : "",
+
+  value(row, "준비사항")
+    ? `\n📝 준비사항\n${value(row, "준비사항")}`
+    : "",
+
+  value(row, "주의사항")
+    ? `\n⚠️ 주의사항\n${value(row, "주의사항")}`
+    : "",
+
+  value(row, "위치")
+    ? `\n📍 위치: ${value(row, "위치")}`
+    : "",
+
+  value(row, "내선번호")
+    ? `\n☎️ 내선번호: ${value(row, "내선번호")}`
+    : "",
+
+  value(row, "참고URL")
+    ? `\n🔗 참고자료\n${value(row, "참고URL")}`
+    : "",
+
+].join("");
 }
 
 app.get("/", (req, res) => {
